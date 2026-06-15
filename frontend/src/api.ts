@@ -1,6 +1,10 @@
 import type { AppConfig, ChatMessage, DocumentInfo, PipelineEvent } from "./types";
 
-const BASE = "/api";
+// In production (separate Railway services), VITE_API_URL points to the
+// backend's public URL, e.g. https://my-backend.up.railway.app. In dev it's
+// unset and requests go through the Vite proxy to /api.
+const API_URL = import.meta.env.VITE_API_URL ?? "";
+const BASE = `${API_URL}/api`;
 
 export async function getConfig(): Promise<AppConfig> {
   const res = await fetch(`${BASE}/config`);
